@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Thông tin thiết bị</title>
+</head>
+<body>
+     <div id="info">Thiết bị chưa kết nối. <a href="">Click vào đây</a> để thử lại</div>
+    <div>
+        <div id="id1"></div>
+        <div id="id2"></div>
+        <div id="id3"></div>
+        <div id="id4"></div>
+
+    </div>
+    <img id="image" />
+	<div>        
+        <div id="dscert" style="overflow-wrap: break-word;"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
+    <script>
+        const socket = io('https://192.168.5.1:8000',{transports:['websocket'], upgrade: false});
+		  socket.on('connect', () => {
+			console.log('Socket connected');
+		  });
+        socket.on('/event', (dgs) => { 
+            if (dgs.id == 4) {
+                const img = document.getElementById('image');
+                img.src = `data:image/jpeg;base64,${dgs.data.img_data}`;
+            } else if (dgs.id == 2) {
+                const img = document.getElementById('id2');
+                img.innerHTML = `Name: ${dgs.data.personName}, CCCD: ${dgs.data.idCode}`;            
+			} else if (dgs.id == 5) {
+                const dscert = document.getElementById('dscert');
+                dscert.innerHTML = `<p>Document Signer Certificate:</p> ${dgs.data.PA.cert}`;
+            }
+        });
+
+		socket.on('/info', (data) => {
+            const img = document.getElementById('info');
+            img.innerHTML = `Thiết bị đã kết nối. SN: <b>${data.serial_device}</b>`;
+        });
+    </script>
+    
+</body>
+</html>
