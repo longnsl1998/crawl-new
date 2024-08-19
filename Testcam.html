@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test camera</title>
+</head>
+<body>
+    <img id="image">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
+    <script>
+        const socket = io.connect('https://192.168.5.1:9000');
+
+        socket.on('/image', (image) => { 
+            const img = document.getElementById('image');
+            img.src = `data:image/jpeg;base64,${image.data}`;
+        });
+    </script>
+    
+</body>
+</html>
