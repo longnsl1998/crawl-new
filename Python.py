@@ -43,5 +43,7 @@ def increase_image_size(input_image_path, output_image_path, target_size_mb=50):
 input_image_path = 'your_small_image.jpg'
 output_image_path = 'output_large_image.png'
 
+https://drive.google.com/file/d/1zYJVOyk10CoG2A2HYiB7RMYCLK_8xlxU/view?usp=sharing
 # Gọi hàm để tạo ảnh
+
 increase_image_size(input_image_path, output_image_path)
